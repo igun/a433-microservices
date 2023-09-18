@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  item-app:
+    # container untuk aplikasi 
+    image: ghcr.io/igun/item-app:v1 # menggunakan image dari github packages
+    ports:
+      - 80:8080 # port mapping ke host port 80
+    depends_on:
+      - item-db # item-app berjalan setelah item-db running
+    restart: always # restart policy agar container selalu restart ketika terhenti
+
+  item-db:
+    # container untuk database
+    image: mongo:3 # menggunakan image mongo:3 dari dockerhub
+    volumes:
+      - app-db:/data/db # set folder database menggunakan docker volume
+
+volumes:
+  # docker volumes
+  app-db: # pembuatan volume untuk data item-db
